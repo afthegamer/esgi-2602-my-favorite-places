@@ -4,6 +4,10 @@ import addressesRouter from "./controllers/Addresses";
 
 const apiRouter = Router();
 
+apiRouter.get("/health", (_, res) => {
+  res.send("ok");
+});
+
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/addresses", addressesRouter);
 

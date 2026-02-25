@@ -22,7 +22,8 @@ usersRouter.post("/", async (req, res) => {
     user.email = email;
     user.hashedPassword = await argon2.hash(password);
     await user.save();
-    return res.json({ item: user });
+    const { hashedPassword: _, ...safeUser } = user as any;
+    return res.json({ item: safeUser });
   } catch (e) {
     console.error(`🆘 got error: ${JSON.stringify(e)}`, e);
     return res.status(500).json({ message: `unable to create user` });
@@ -31,7 +32,8 @@ usersRouter.post("/", async (req, res) => {
 
 usersRouter.get("/me", isAuthorized, async (req, res) => {
   const user = await getUserFromRequest(req);
-  return res.json({ item: user });
+  const { hashedPassword: _, ...safeUser } = user as any;
+  return res.json({ item: safeUser });
 });
 
 usersRouter.post("/tokens", async (req, res) => {
