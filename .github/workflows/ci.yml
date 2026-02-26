@@ -57,6 +57,11 @@ jobs:
   docker-build:
     name: Docker Build
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker images
+        run: docker compose build
 
   e2e-tests:
     name: E2E Tests
@@ -117,8 +122,3 @@ jobs:
           retention-days: 7
 
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build Docker images
-        run: docker compose build
